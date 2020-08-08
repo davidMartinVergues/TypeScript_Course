@@ -1,3 +1,3 @@
-# TypeScript Course by Academind (youTube)
-## Maximillian  
+# TypeScript Course by Maximillian Academind (youTube)
+## >Max
 
