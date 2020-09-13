@@ -1,9 +1,13 @@
 # INDEX
 
-- [TypeScript Course](#typescript-course)
 - [Introducción](#introducci-n)
   - [Que es TypeScript](#que-es-typescript)
   - [Instalar TS](#instalar-ts)
+- [TypeScript overview](#typescript-overview)
+- [Trabajando con Tipos](#trabajando-con-tipos)
+  - [Tipos por defecto](#tipos-por-defecto)
+    - [En una función](#en-una-funci-n)
+    - [En una variable](#en-una-variable)
 
 https://ecotrust-canada.github.io/markdown-toc/
 
@@ -144,7 +148,9 @@ Una cosa a tener en cuenta es que en JS los tipos son dinámicos, es decir puede
 2. Tipos exclusivos de TS
    - Object con constructor
 
-## Tipos por defecto en una función
+## Tipos por defecto
+
+### En una función
 
 Para poder decirle a TS que en la función solo acepte un tipo concreto de datos debemos usar la notación de :
 
@@ -157,6 +163,8 @@ function add(n1:number, n2:number) {
 Al fijar estos dos argumentos como number el editor ya me avisa que tengo un error y cuando intento compilar y salta el error
 
 ![error](images/img-4.png)
+
+### En una variable
 
 También podemos usar la notación de ':' cuando definimos una variable.
 
