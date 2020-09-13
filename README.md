@@ -132,3 +132,49 @@ Esto nos generará un archivo JS que será el que leerá el interprete de JS(nav
 ---
 
 # Trabajando con Tipos
+
+TS provee de muchos tipos de datos a JS, incluso permite crear nuestros propios tipos.
+Una cosa a tener en cuenta es que en JS los tipos son dinámicos, es decir puedes definir una variable como number y luego reasignarla como String. En camio en TS eso no es posible (usa tipos estáticos) y en tiempo de desarrollo saltará un error.
+
+1. Tipos de datos soportados por JS y TS
+   - Number => no hay distinción entre integers y floats
+   - Strings => también soporta los templates strigs
+   - Boolean
+   - Object
+2. Tipos exclusivos de TS
+   - Object con constructor
+
+## Tipos por defecto en una función
+
+Para poder decirle a TS que en la función solo acepte un tipo concreto de datos debemos usar la notación de :
+
+```
+function add(n1:number, n2:number) {
+  return n1 + n2;
+}
+```
+
+Al fijar estos dos argumentos como number el editor ya me avisa que tengo un error y cuando intento compilar y salta el error
+
+![error](images/img-4.png)
+
+También podemos usar la notación de ':' cuando definimos una variable.
+
+```
+let n1: number;
+n1= 5;
+}
+```
+
+Así 'avisamos' a TS que la variable contendrá un number y si queremos asignarle otro tipo nos dará error.
+
+![error](images/img-5.png)
+
+```
+let n1: number= 5;
+}
+```
+
+esto sería una mala praxis porque el core types de TS tiene una función que se llama **_inferencia de datos_** esto significa que cuando inicializamos una variable TS 'recuerda' que tipo de dato es el inicial y si intentamos darle otro tipo de dato también se quejará.
+
+![error](images/img-6.png)
