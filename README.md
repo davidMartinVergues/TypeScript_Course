@@ -189,6 +189,8 @@ esto sería una mala praxis porque el core types de TS tiene una función que se
 
 ## Core Types
 
+![Not Found](images/img-10.png)
+
 - ### Number
 - ### Strings
 - ### Booleans
