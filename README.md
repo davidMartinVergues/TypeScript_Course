@@ -186,3 +186,94 @@ let n1: number= 5;
 esto sería una mala praxis porque el core types de TS tiene una función que se llama **_inferencia de datos_** esto significa que cuando inicializamos una variable TS 'recuerda' que tipo de dato es el inicial y si intentamos darle otro tipo de dato también se quejará.
 
 ![error](images/img-6.png)
+
+## Core Types
+
+- ### Number
+- ### Strings
+- ### Booleans
+- ### OBJECTS
+
+```
+const person = {
+  name: "david martin",
+  age: 36
+};
+
+console.log(typeof person); // object
+console.log(person.name); // david martin
+
+
+```
+
+- ### ARRAYS
+
+Soporta cualquier array creado como JS, arrays mezclando tipos, nested arrays, etc...
+Los arrays en TS pueden ser flexibles o estrictos
+
+1.  cuando creamos un array TS detecta qué tipo de datos contiene
+
+```
+const person = {
+  name: "david martin",
+  age: 36,
+  hoobies: ["sports", "cooking"],
+};
+```
+
+![error](images/img-7.png)
+![error](images/img-8.png)
+
+Esto permite al IDE sugerir métodos a los elementos del array según su tipo, como el método .toUpperCase()
+
+![Not Found](images/img-9.png)
+
+2.  Puedo definir un array previamente para que solo contenga un tipo de dato
+
+```
+let favoriteActivities: string[];
+
+favoriteActivities = ["sports"];
+
+```
+
+3. o bien para que pueda contener una ezcla de dos tipos de datos
+
+```
+let favoriteActivities: (string | number)[];
+
+favoriteActivities = ["sports", 5];
+
+```
+
+4. o cualquier tipo de datos, aunque esto no tiene mucho sentido en TS xq entonces sería como un array de JS, no tenemos control sobre los tipos
+
+```
+let favoriteActivities: any[];
+
+favoriteActivities = ["sports", 5, { name: "david" }];
+
+```
+
+- ### Tuples
+
+Podemos crear tuples como en Python.
+Una tupla es como un array en cuanto a estructura pero la diferencia es que nos permite fijar que tipo de datos contendrá y la longitud total de la tupla
+
+```
+let tupla: [number, string];
+
+tupla = [10, "david"]; // cumple con la estructura
+
+tupla[1] = 5; // no me permite poner en la segunda posición  un number
+
+tupla = ["david", 1]; // no me permite poner un number seguido de string
+
+tupla = [1]; // no cumple ni tamaño no tipo de datos
+
+tupla = [10, "david", 5]; // no cumple  tamaño*/
+
+tupla.push("david2"); // esto si está permitido pero no debería ERROR!!
+```
+
+- ### Enum
