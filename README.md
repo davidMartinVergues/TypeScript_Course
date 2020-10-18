@@ -279,3 +279,50 @@ tupla.push("david2"); // esto si está permitido pero no debería ERROR!!
 ```
 
 - ### Enum
+
+Es el primer tipo de dato personalizado. Es como crear un objeto. Se usan cuando quieres tener identificadores legibles o fáciles de entender.
+
+```
+// creo mi enum
+enum Role { ADMIN, READ_ONLY, AUTHOR  };
+
+=> lo que sucede aquí es q cada elemento del enum estaá asociado a un número, si vemos el códgo JS compilado :
+
+(function (Role) {
+    Role[Role["ADMIN"] = 0] = "ADMIN";
+    Role[Role["READ_ONLY"] = 1] = "READ_ONLY";
+    Role[Role["AUTHOR"] = 2] = "AUTHOR";
+})(Role || (Role = {}));
+
+=> es posible cambiar ese valor por defecto q empieza x el 0
+
+enum Role { ADMIN = 5, READ_ONLY, AUTHOR  };
+
+ó
+
+enum Role { ADMIN = 'ADMIN' , READ_ONLY=100, AUTHOR=200  };
+
+si hacemos esto automáticamente READ_ONLY y AUTHOR adquieren el 6 y 7 respectivamente.
+
+//creo un objeto
+
+const person = {
+  name: "david martin",
+  age: 36,
+  hoobies: ["sports", "cooking"],
+  role: Role
+};
+
+```
+
+- ### Any
+
+Es el tipo más flexible. No da información de tipo a TS. Básicamente puede contener cualquier tipo de dato.
+
+Es mejor no usar este tipo porque desaprovechamos las ventajas de TS.
+
+```
+let myArray: any[];
+
+myArray = [1, "avid", [1, 2, 3], { name: "david" }];
+```
