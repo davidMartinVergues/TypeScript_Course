@@ -306,12 +306,22 @@ si hacemos esto automáticamente READ_ONLY y AUTHOR adquieren el 6 y 7 respectiv
 
 //creo un objeto
 
+enum Role {
+  ADMIN,
+  READ_ONLY,
+  AUTHOR,
+}
+
 const person = {
   name: "david martin",
   age: 36,
   hoobies: ["sports", "cooking"],
-  role: Role
+  role: Role.ADMIN,
 };
+
+if (person.role == Role.ADMIN) {
+  console.log(person.role);
+}
 
 ```
 
@@ -325,4 +335,76 @@ Es mejor no usar este tipo porque desaprovechamos las ventajas de TS.
 let myArray: any[];
 
 myArray = [1, "avid", [1, 2, 3], { name: "david" }];
+```
+
+# Tipos avanzados
+
+## Union Types |
+
+Esto nos permite aceptar más de un tipo de dato en una función pero lo q causa es que luego dentro de la función tendremos que adaptar la lógica.
+
+```
+function combine(input1: number | string, input2: number | string) {
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number'){
+
+    result = input1 + input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
+```
+
+## Literal Types
+
+Permite fijar un valor para los atributos de la función.
+
+```
+function combine2(
+  input1: number | string,
+  input2: number | string,
+   resultConversion: 'as-number' | 'as-text') {
+
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number'){
+
+    result = +input1 + +input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
+}
+```
+
+## Types Aliases
+
+Creamos un alias que incluye todos los tipos presentes en un operador union
+Para crearlo usamos la keyword type
+
+```
+
+type NumberString = number | string;
+type ConversionDescripyor =   'as-number' | 'as-text';
+
+function combine3(input1: NumberString, input2: NumberString, resultConversion: ConversionDescripyor) {
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number'){
+
+    result = +input1 + +input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
 ```
