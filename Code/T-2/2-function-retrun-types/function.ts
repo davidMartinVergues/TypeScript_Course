@@ -44,28 +44,3 @@ addAndHandle(10,20, (result)=>{ //creamos una función anónima que es el callba
   console.log(result);
   
 })
-
-// Unknown type
-
-let userInput : unknown;
-let userName : string;
-
-userInput= 5;
-userInput= 'ddd';
-
-if(typeof userInput === 'string'){
-
-  userName= userInput;
-}
-
-
-// never type
-
-function generateError(message:string,code:number): never{
-
-  throw{message:message, errorCode:code}
-
-}
-
-
-generateError('a error has ocurred in time 6:00', 500);

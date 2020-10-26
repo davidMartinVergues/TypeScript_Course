@@ -8,6 +8,24 @@
   - [Tipos por defecto](#tipos-por-defecto)
     - [En una función](#en-una-funci-n)
     - [En una variable](#en-una-variable)
+  - [Core Types](#core-types)
+    - [Number](#number)
+    - [Strings](#strings)
+    - [Booleans](#booleans)
+    - [OBJECTS](#objects)
+    - [ARRAYS](#arrays)
+    - [Tuples](#tuples)
+    - [Enum](#enum)
+    - [Any](#any)
+- [Tipos avanzados](#tipos-avanzados)
+  - [Union Types |](#union-types--)
+  - [Literal Types](#literal-types)
+  - [Types Aliases](#types-aliases)
+- [FUNCIONES](#funciones)
+  - [Funciones, variables y el tipo Function](#funciones--variables-y-el-tipo-function)
+  - [Functions Types and Callbacks](#functions-types-and-callbacks)
+  - [Unkown Type](#unkown-type)
+  - [Never Type](#never-type)
 
 https://ecotrust-canada.github.io/markdown-toc/
 
@@ -408,3 +426,172 @@ function combine3(input1: NumberString, input2: NumberString, resultConversion: 
   return result;
 }
 ```
+
+# FUNCIONES
+
+Las funciones en TS:
+
+- Tipo de dato de los parámetros
+- Tipo de dato de retorno o void
+
+En cuanto al tipo de dato de retorno TS lo puede inferir según los tipos de los parámetros.
+
+![error](images/img-11.png)
+
+si modificamos el return TS tb lo detecta
+
+![error](images/img-12.png)
+
+Si queremos fijar el tipo de retorno lo hacemos con ":" después de la función
+
+```
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+
+```
+
+Si dentro de la función hacemos un console.log() esa función no devuelve nada lo que llamamos "void"
+
+![error](images/img-13.png)
+
+## Funciones, variables y el tipo Function
+
+Podemos asignar una función a una variables de la siguiente manera:
+
+```
+
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+
+let combineValues = add3;
+```
+
+Si lo dejo así esa variable le puedo asignar cualquier otro valor y eso ocasionar un error en el código. Para evitar eso tenemos el tipo Function en TS que nos permite fijar que una variable contendrá una función y además especificar cómo será esa función
+
+```
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+let combineValues : Function;
+```
+
+Si lo dejo así puedo asignar a la variable cualquier función, vamos a acotar más el asunto para ello con notación de arrow function fijamos los tipos de los arámetros y del retorno
+
+```
+let combineValues : (a:number,b:number)=> number;
+
+combineValues = add;
+
+```
+
+si la función devuelve otro tipo de dato TS se quejará
+
+![error](images/img-14.png)
+
+## Functions Types and Callbacks
+
+Podemos definir como será el callback que recibe la función
+
+```
+function addAndHandle (a:number,b:number, callBackFunction : (num:number)=>void){
+
+  const result = a+b;
+
+  callBackFunction(result);
+}
+
+
+addAndHandle(10,20, (result)=>{ //creamos una función anónima que es el callback
+  console.log(result);
+
+})
+
+```
+
+## Unkown Type
+
+Es parecido a [any](###any) pero más restrictivo. Tengo que hacer una comprobación extra.
+
+```
+let userInput : unknown;
+let userName : string;
+
+userInput= 5;
+userInput= 'ddd';
+
+if(typeof userInput === 'string'){
+
+  userName= userInput;
+}
+
+```
+
+## Never Type
+
+Es un tipo que puede devolver una función, normalmente se usa en funciones que lanzan un error
+
+```
+
+function generateError(message:string,code:number): never{
+
+  throw{message:message, errorCode:code}
+
+}
+
+generateError('a error has ocurred', 500);
+```
+
+![error](images/img-15.png)
+
+# TypeScript extraInformation
+
+## TypeScript compiler y cómo configurarlo
+
+### watch mode " -w"
+
+Para compilar el archivo TS debemos dar la orden en consola de "tsc app.ts" si no queremos tener que compilar a cada cambio debemos entrar en modo watch para ello
+
+```
+tsc app.ts -w
+```
+
+### Compilar un proyecto TS entero " tsc --init"
+
+Si en un proyecto tenemos varios archivos TS y queremos ejecutarlo todos tendremos que primero crear un archivo de configuración tsconfig.json mediante el comando
+
+```
+tsc --init
+```
+
+y luego mediante ejecutar todos los archivos TS (sin especificar ningún archivo)
+
+```
+tsc
+```
+
+podemos ajecutarlo en modo watch
+
+```
+tsc -w
+```
+
+### tsconfig File
+
+es un JSON donde podemos modificar el comportamiento del compilador en este proyecto.
+
+#### exclude option
+
+creamos un array en el JSON donde especificamos los archivos/folders q no queremos que se compilen.
+
+Por defecto ya excluye los módulos de node.
+
+![error](images/img-16.png)
+
+#### include
+
+solo compilará los archivos especificados en esta sección.
