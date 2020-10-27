@@ -26,6 +26,20 @@
   - [Functions Types and Callbacks](#functions-types-and-callbacks)
   - [Unkown Type](#unkown-type)
   - [Never Type](#never-type)
+- [TypeScript extraInformation](#typescript-extrainformation)
+  - [TypeScript compiler y cómo configurarlo](#typescript-compiler-y-c-mo-configurarlo)
+    - [watch mode " -w"](#watch-mode----w-)
+    - [Compilar un proyecto TS entero " tsc --init"](#compilar-un-proyecto-ts-entero---tsc---init-)
+    - [tsconfig File](#tsconfig-file)
+      - [exclude option](#exclude-option)
+      - [include](#include)
+      - [Files option](#files-option)
+    - [Compiler options](#compiler-options)
+      - [Target](#target)
+      - [Module](#module)
+      - [sourceMap](#sourcemap)
+      - [outDir and rootDir](#outdir-and-rootdir)
+      - [noEmitOnError](#noemitonerror)
 
 https://ecotrust-canada.github.io/markdown-toc/
 
