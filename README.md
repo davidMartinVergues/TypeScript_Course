@@ -8,6 +8,24 @@
   - [Tipos por defecto](#tipos-por-defecto)
     - [En una función](#en-una-funci-n)
     - [En una variable](#en-una-variable)
+  - [Core Types](#core-types)
+    - [Number](#number)
+    - [Strings](#strings)
+    - [Booleans](#booleans)
+    - [OBJECTS](#objects)
+    - [ARRAYS](#arrays)
+    - [Tuples](#tuples)
+    - [Enum](#enum)
+    - [Any](#any)
+- [Tipos avanzados](#tipos-avanzados)
+  - [Union Types |](#union-types--)
+  - [Literal Types](#literal-types)
+  - [Types Aliases](#types-aliases)
+- [FUNCIONES](#funciones)
+  - [Funciones, variables y el tipo Function](#funciones--variables-y-el-tipo-function)
+  - [Functions Types and Callbacks](#functions-types-and-callbacks)
+  - [Unkown Type](#unkown-type)
+  - [Never Type](#never-type)
 
 https://ecotrust-canada.github.io/markdown-toc/
 
@@ -306,12 +324,22 @@ si hacemos esto automáticamente READ_ONLY y AUTHOR adquieren el 6 y 7 respectiv
 
 //creo un objeto
 
+enum Role {
+  ADMIN,
+  READ_ONLY,
+  AUTHOR,
+}
+
 const person = {
   name: "david martin",
   age: 36,
   hoobies: ["sports", "cooking"],
-  role: Role
+  role: Role.ADMIN,
 };
+
+if (person.role == Role.ADMIN) {
+  console.log(person.role);
+}
 
 ```
 
@@ -326,3 +354,288 @@ let myArray: any[];
 
 myArray = [1, "avid", [1, 2, 3], { name: "david" }];
 ```
+
+# Tipos avanzados
+
+## Union Types |
+
+Esto nos permite aceptar más de un tipo de dato en una función pero lo q causa es que luego dentro de la función tendremos que adaptar la lógica.
+
+```
+function combine(input1: number | string, input2: number | string) {
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number'){
+
+    result = input1 + input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
+```
+
+## Literal Types
+
+Permite fijar un valor para los atributos de la función.
+
+```
+function combine2(
+  input1: number | string,
+  input2: number | string,
+   resultConversion: 'as-number' | 'as-text') {
+
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number'){
+
+    result = +input1 + +input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
+}
+```
+
+## Types Aliases
+
+Creamos un alias que incluye todos los tipos presentes en un operador union
+Para crearlo usamos la keyword type
+
+```
+
+type NumberString = number | string;
+type ConversionDescripyor =   'as-number' | 'as-text';
+
+function combine3(input1: NumberString, input2: NumberString, resultConversion: ConversionDescripyor) {
+  let result;
+
+  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number'){
+
+    result = +input1 + +input2;
+
+  }else{
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
+}
+```
+
+# FUNCIONES
+
+Las funciones en TS:
+
+- Tipo de dato de los parámetros
+- Tipo de dato de retorno o void
+
+En cuanto al tipo de dato de retorno TS lo puede inferir según los tipos de los parámetros.
+
+![error](images/img-11.png)
+
+si modificamos el return TS tb lo detecta
+
+![error](images/img-12.png)
+
+Si queremos fijar el tipo de retorno lo hacemos con ":" después de la función
+
+```
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+
+```
+
+Si dentro de la función hacemos un console.log() esa función no devuelve nada lo que llamamos "void"
+
+![error](images/img-13.png)
+
+## Funciones, variables y el tipo Function
+
+Podemos asignar una función a una variables de la siguiente manera:
+
+```
+
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+
+let combineValues = add3;
+```
+
+Si lo dejo así esa variable le puedo asignar cualquier otro valor y eso ocasionar un error en el código. Para evitar eso tenemos el tipo Function en TS que nos permite fijar que una variable contendrá una función y además especificar cómo será esa función
+
+```
+function add3 (n1:number, n2:number): number{
+
+  return n1+n2;
+}
+let combineValues : Function;
+```
+
+Si lo dejo así puedo asignar a la variable cualquier función, vamos a acotar más el asunto para ello con notación de arrow function fijamos los tipos de los arámetros y del retorno
+
+```
+let combineValues : (a:number,b:number)=> number;
+
+combineValues = add;
+
+```
+
+si la función devuelve otro tipo de dato TS se quejará
+
+![error](images/img-14.png)
+
+## Functions Types and Callbacks
+
+Podemos definir como será el callback que recibe la función
+
+```
+function addAndHandle (a:number,b:number, callBackFunction : (num:number)=>void){
+
+  const result = a+b;
+
+  callBackFunction(result);
+}
+
+
+addAndHandle(10,20, (result)=>{ //creamos una función anónima que es el callback
+  console.log(result);
+
+})
+
+```
+
+## Unkown Type
+
+Es parecido a [any](###any) pero más restrictivo. Tengo que hacer una comprobación extra.
+
+```
+let userInput : unknown;
+let userName : string;
+
+userInput= 5;
+userInput= 'ddd';
+
+if(typeof userInput === 'string'){
+
+  userName= userInput;
+}
+
+```
+
+## Never Type
+
+Es un tipo que puede devolver una función, normalmente se usa en funciones que lanzan un error
+
+```
+
+function generateError(message:string,code:number): never{
+
+  throw{message:message, errorCode:code}
+
+}
+
+generateError('a error has ocurred', 500);
+```
+
+![error](images/img-15.png)
+
+# TypeScript extraInformation
+
+## TypeScript compiler y cómo configurarlo
+
+### watch mode " -w"
+
+Para compilar el archivo TS debemos dar la orden en consola de "tsc app.ts" si no queremos tener que compilar a cada cambio debemos entrar en modo watch para ello
+
+```
+tsc app.ts -w
+```
+
+### Compilar un proyecto TS entero " tsc --init"
+
+Si en un proyecto tenemos varios archivos TS y queremos ejecutarlo todos tendremos que primero crear un archivo de configuración tsconfig.json mediante el comando
+
+```
+tsc --init
+```
+
+y luego mediante ejecutar todos los archivos TS (sin especificar ningún archivo)
+
+```
+tsc
+```
+
+podemos ajecutarlo en modo watch
+
+```
+tsc -w
+```
+
+### tsconfig File
+
+es un JSON donde podemos modificar el comportamiento del compilador en este proyecto.
+
+#### exclude option
+
+creamos un array en el JSON donde especificamos los archivos/folders q no queremos que se compilen.
+
+Por defecto ya excluye los módulos de node.
+
+![error](images/img-16.png)
+
+#### include
+
+solo compilará los archivos especificados en esta sección. Podemos incluir archivos y carpetas.
+
+![error](images/img-17.png)
+
+#### Files option
+
+Esencialmente es como include, en el sentido que permite compilar archivos en concreto pero se diferencia en que no podemos incluir carpetas.
+
+![error](images/img-18.png)
+
+### Compiler options
+
+Una vez especificamos qué archivos se van a compilar podemos gestionar cómo será esa compilación.
+
+#### Target
+
+Especificamos a que versión de JS vamos a compilar el archivo TS, por defecto "
+"es5". Con lo que podemos generar código JS que funcione en browser antiguos.
+
+![error](images/img-19.png)
+
+#### Module
+
+![error](images/img-20.png)
+
+Por defecto la opción lib está desactivado y esto es porque coge las librerias compatibles con la versión de JS especificada en "target". Si descomentamos lib y lo dejamos vacío nos dará error de compilación xq espera unos valores, por ejemplo la libreria.
+
+![error](images/img-21.png)
+
+#### sourceMap
+
+Si lo descomentamos permite conservar los archivos TS para poderlos visualizar en el navegador y poder hacer debugging.
+
+#### outDir and rootDir
+
+Normalmente los proyectos tienen una carpeta source donde están los archivos TS y una carpeta dist donde uardamos los archivos JS resultantes de la compilación.
+
+- outDir => le decimos a TS donde guardar los archivos JS
+- rootDir => indicamos dónde están guardados los archvos TS, si especificamos una carpeta y esta tiene subcarpetas tb buscará archivos TS dentro de esta.
+
+#### noEmitOnError
+
+Por defecto está seteado en false, esto indica que si TS tiene errores igualmente generará el archivo JS, si lo ponemos en True mientras haya errores no compilará ningún archivo a JS.
+
+![error](images/img-22.png)
