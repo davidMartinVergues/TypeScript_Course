@@ -26,6 +26,20 @@
   - [Functions Types and Callbacks](#functions-types-and-callbacks)
   - [Unkown Type](#unkown-type)
   - [Never Type](#never-type)
+- [TypeScript extraInformation](#typescript-extrainformation)
+  - [TypeScript compiler y cómo configurarlo](#typescript-compiler-y-c-mo-configurarlo)
+    - [watch mode " -w"](#watch-mode----w-)
+    - [Compilar un proyecto TS entero " tsc --init"](#compilar-un-proyecto-ts-entero---tsc---init-)
+    - [tsconfig File](#tsconfig-file)
+      - [exclude option](#exclude-option)
+      - [include](#include)
+      - [Files option](#files-option)
+    - [Compiler options](#compiler-options)
+      - [Target](#target)
+      - [Module](#module)
+      - [sourceMap](#sourcemap)
+      - [outDir and rootDir](#outdir-and-rootdir)
+      - [noEmitOnError](#noemitonerror)
 
 https://ecotrust-canada.github.io/markdown-toc/
 
@@ -594,4 +608,48 @@ Por defecto ya excluye los módulos de node.
 
 #### include
 
-solo compilará los archivos especificados en esta sección.
+solo compilará los archivos especificados en esta sección. Podemos incluir archivos y carpetas.
+
+![error](images/img-17.png)
+
+#### Files option
+
+Esencialmente es como include, en el sentido que permite compilar archivos en concreto pero se diferencia en que no podemos incluir carpetas.
+
+![error](images/img-18.png)
+
+### Compiler options
+
+Una vez especificamos qué archivos se van a compilar podemos gestionar cómo será esa compilación.
+
+#### Target
+
+Especificamos a que versión de JS vamos a compilar el archivo TS, por defecto "
+"es5". Con lo que podemos generar código JS que funcione en browser antiguos.
+
+![error](images/img-19.png)
+
+#### Module
+
+![error](images/img-20.png)
+
+Por defecto la opción lib está desactivado y esto es porque coge las librerias compatibles con la versión de JS especificada en "target". Si descomentamos lib y lo dejamos vacío nos dará error de compilación xq espera unos valores, por ejemplo la libreria.
+
+![error](images/img-21.png)
+
+#### sourceMap
+
+Si lo descomentamos permite conservar los archivos TS para poderlos visualizar en el navegador y poder hacer debugging.
+
+#### outDir and rootDir
+
+Normalmente los proyectos tienen una carpeta source donde están los archivos TS y una carpeta dist donde uardamos los archivos JS resultantes de la compilación.
+
+- outDir => le decimos a TS donde guardar los archivos JS
+- rootDir => indicamos dónde están guardados los archvos TS, si especificamos una carpeta y esta tiene subcarpetas tb buscará archivos TS dentro de esta.
+
+#### noEmitOnError
+
+Por defecto está seteado en false, esto indica que si TS tiene errores igualmente generará el archivo JS, si lo ponemos en True mientras haya errores no compilará ningún archivo a JS.
+
+![error](images/img-22.png)
