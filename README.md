@@ -1,35 +1,27 @@
 # INDEX
 
-- [Introducción](#introducci-n)
-  - [Que es TypeScript](#que-es-typescript)
-  - [Instalar TS](#instalar-ts)
+- [INDEX](#index)
+- [TypeScript Course](#typescript-course)
+    - [by Maximillian Academind (youTube)](#by-maximillian-academind-youtube)
 - [TypeScript overview](#typescript-overview)
 - [Trabajando con Tipos](#trabajando-con-tipos)
   - [Tipos por defecto](#tipos-por-defecto)
-    - [En una función](#en-una-funci-n)
+    - [En una función](#en-una-función)
     - [En una variable](#en-una-variable)
   - [Core Types](#core-types)
-    - [Number](#number)
-    - [Strings](#strings)
-    - [Booleans](#booleans)
-    - [OBJECTS](#objects)
-    - [ARRAYS](#arrays)
-    - [Tuples](#tuples)
-    - [Enum](#enum)
-    - [Any](#any)
 - [Tipos avanzados](#tipos-avanzados)
-  - [Union Types |](#union-types--)
+  - [Union Types |](#union-types-)
   - [Literal Types](#literal-types)
   - [Types Aliases](#types-aliases)
 - [FUNCIONES](#funciones)
-  - [Funciones, variables y el tipo Function](#funciones--variables-y-el-tipo-function)
+  - [Funciones, variables y el tipo Function](#funciones-variables-y-el-tipo-function)
   - [Functions Types and Callbacks](#functions-types-and-callbacks)
   - [Unkown Type](#unkown-type)
   - [Never Type](#never-type)
 - [TypeScript extraInformation](#typescript-extrainformation)
-  - [TypeScript compiler y cómo configurarlo](#typescript-compiler-y-c-mo-configurarlo)
-    - [watch mode " -w"](#watch-mode----w-)
-    - [Compilar un proyecto TS entero " tsc --init"](#compilar-un-proyecto-ts-entero---tsc---init-)
+  - [TypeScript compiler y cómo configurarlo](#typescript-compiler-y-cómo-configurarlo)
+    - [watch mode " -w"](#watch-mode---w)
+    - [Compilar un proyecto TS entero " tsc --init"](#compilar-un-proyecto-ts-entero--tsc---init)
     - [tsconfig File](#tsconfig-file)
       - [exclude option](#exclude-option)
       - [include](#include)
@@ -68,60 +60,52 @@ Ventajas de TS puede ser que introduce tipos de datos y nos facilita debugear el
 
 Si tenemos este código
 
-```
-const num1 = document.querySelector('#num1');
-const num2 = document.querySelector('#num2');
-const btn = document.querySelector('button');
-const result = document.querySelector('p');
+```typescript
+const num1 = document.querySelector("#num1");
+const num2 = document.querySelector("#num2");
+const btn = document.querySelector("button");
+const result = document.querySelector("p");
 
 function add(num1, num2) {
-  return num1 + num2
+  return num1 + num2;
 }
 
-btn.addEventListener('click', () => {
-
-  result.innerText = add(num1.value, num2.value)
-})
-
+btn.addEventListener("click", () => {
+  result.innerText = add(num1.value, num2.value);
+});
 ```
 
 Cuando cogemos el valor de un input JS siempre lo hace como un string, lo que el resultado de la función será dos números concatenamos (5+5 = 55).
 
 Para solucionar esto en JS tenemos que comprobar los tipos con **typeof** y conversión a number con el **+** delante
 
-```
-
+```typescript
 function add(num1, num2) {
-
- if (typeof num1 === 'number' && typeof number2 === 'number') {
-   return num1 + num2
- } else {
-   return +num1 + +number2
- }
+  if (typeof num1 === "number" && typeof number2 === "number") {
+    return num1 + num2;
+  } else {
+    return +num1 + +number2;
+  }
 }
-
 ```
 
 Esto es un error en el código que TS nos ayuda a evitar.
 
 El archivo escrito en TS sería
 
-```
-const num1 = document.querySelector('#num1')! as HTMLInputElement;
-const num2 = document.querySelector('#num2')! as HTMLInputElement;
-const btn = document.querySelector('button');
-const result = document.querySelector('p');
+```typescript
+const num1 = document.querySelector("#num1")! as HTMLInputElement;
+const num2 = document.querySelector("#num2")! as HTMLInputElement;
+const btn = document.querySelector("button");
+const result = document.querySelector("p");
 
 function add(num1: number, num2: number) {
-
-  return num1 + num2
+  return num1 + num2;
 }
 
-btn.addEventListener('click', () => {
-
-  console.log(add(+num1.value, +num2.value))
-})
-
+btn.addEventListener("click", () => {
+  console.log(add(+num1.value, +num2.value));
+});
 ```
 
 - ! as HTMLInputElement -> indicamos que realmente existe un elemento HTML con ese id (es como una doble comprobación que nos obliga TS)
@@ -186,8 +170,8 @@ Una cosa a tener en cuenta es que en JS los tipos son dinámicos, es decir puede
 
 Para poder decirle a TS que en la función solo acepte un tipo concreto de datos debemos usar la notación de :
 
-```
-function add(n1:number, n2:number) {
+```typescript
+function add(n1: number, n2: number) {
   return n1 + n2;
 }
 ```
@@ -200,7 +184,7 @@ Al fijar estos dos argumentos como number el editor ya me avisa que tengo un err
 
 También podemos usar la notación de ':' cuando definimos una variable.
 
-```
+```typescript
 let n1: number;
 n1= 5;
 }
@@ -210,7 +194,7 @@ Así 'avisamos' a TS que la variable contendrá un number y si queremos asignarl
 
 ![error](images/img-5.png)
 
-```
+```typescript
 let n1: number= 5;
 }
 ```
@@ -228,16 +212,14 @@ esto sería una mala praxis porque el core types de TS tiene una función que se
 - ### Booleans
 - ### OBJECTS
 
-```
+```typescript
 const person = {
   name: "david martin",
-  age: 36
+  age: 36,
 };
 
 console.log(typeof person); // object
 console.log(person.name); // david martin
-
-
 ```
 
 - ### ARRAYS
@@ -247,7 +229,7 @@ Los arrays en TS pueden ser flexibles o estrictos
 
 1.  cuando creamos un array TS detecta qué tipo de datos contiene
 
-```
+```typescript
 const person = {
   name: "david martin",
   age: 36,
@@ -264,29 +246,26 @@ Esto permite al IDE sugerir métodos a los elementos del array según su tipo, c
 
 2.  Puedo definir un array previamente para que solo contenga un tipo de dato
 
-```
+```typescript
 let favoriteActivities: string[];
 
 favoriteActivities = ["sports"];
-
 ```
 
 3. o bien para que pueda contener una ezcla de dos tipos de datos
 
-```
+```typescript
 let favoriteActivities: (string | number)[];
 
 favoriteActivities = ["sports", 5];
-
 ```
 
 4. o cualquier tipo de datos, aunque esto no tiene mucho sentido en TS xq entonces sería como un array de JS, no tenemos control sobre los tipos
 
-```
+```typescript
 let favoriteActivities: any[];
 
 favoriteActivities = ["sports", 5, { name: "david" }];
-
 ```
 
 - ### Tuples
@@ -294,7 +273,7 @@ favoriteActivities = ["sports", 5, { name: "david" }];
 Podemos crear tuples como en Python.
 Una tupla es como un array en cuanto a estructura pero la diferencia es que nos permite fijar que tipo de datos contendrá y la longitud total de la tupla
 
-```
+```typescript
 let tupla: [number, string];
 
 tupla = [10, "david"]; // cumple con la estructura
@@ -314,7 +293,7 @@ tupla.push("david2"); // esto si está permitido pero no debería ERROR!!
 
 Es el primer tipo de dato personalizado. Es como crear un objeto. Se usan cuando quieres tener identificadores legibles o fáciles de entender.
 
-```
+```typescript
 // creo mi enum
 enum Role { ADMIN, READ_ONLY, AUTHOR  };
 
@@ -363,7 +342,7 @@ Es el tipo más flexible. No da información de tipo a TS. Básicamente puede co
 
 Es mejor no usar este tipo porque desaprovechamos las ventajas de TS.
 
-```
+```typescript
 let myArray: any[];
 
 myArray = [1, "avid", [1, 2, 3], { name: "david" }];
@@ -375,15 +354,13 @@ myArray = [1, "avid", [1, 2, 3], { name: "david" }];
 
 Esto nos permite aceptar más de un tipo de dato en una función pero lo q causa es que luego dentro de la función tendremos que adaptar la lógica.
 
-```
+```typescript
 function combine(input1: number | string, input2: number | string) {
   let result;
 
-  if (typeof input1 === 'number' && typeof input2 === 'number'){
-
+  if (typeof input1 === "number" && typeof input2 === "number") {
     result = input1 + input2;
-
-  }else{
+  } else {
     result = input1.toString() + input2.toString();
   }
 
@@ -395,7 +372,7 @@ function combine(input1: number | string, input2: number | string) {
 
 Permite fijar un valor para los atributos de la función.
 
-```
+```typescript
 function combine2(
   input1: number | string,
   input2: number | string,
@@ -421,19 +398,23 @@ function combine2(
 Creamos un alias que incluye todos los tipos presentes en un operador union
 Para crearlo usamos la keyword type
 
-```
-
+```typescript
 type NumberString = number | string;
-type ConversionDescripyor =   'as-number' | 'as-text';
+type ConversionDescripyor = "as-number" | "as-text";
 
-function combine3(input1: NumberString, input2: NumberString, resultConversion: ConversionDescripyor) {
+function combine3(
+  input1: NumberString,
+  input2: NumberString,
+  resultConversion: ConversionDescripyor
+) {
   let result;
 
-  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number'){
-
+  if (
+    (typeof input1 === "number" && typeof input2 === "number") ||
+    resultConversion === "as-number"
+  ) {
     result = +input1 + +input2;
-
-  }else{
+  } else {
     result = input1.toString() + input2.toString();
   }
 
@@ -458,12 +439,10 @@ si modificamos el return TS tb lo detecta
 
 Si queremos fijar el tipo de retorno lo hacemos con ":" después de la función
 
-```
-function add3 (n1:number, n2:number): number{
-
-  return n1+n2;
+```typescript
+function add3(n1: number, n2: number): number {
+  return n1 + n2;
 }
-
 ```
 
 Si dentro de la función hacemos un console.log() esa función no devuelve nada lo que llamamos "void"
@@ -474,11 +453,9 @@ Si dentro de la función hacemos un console.log() esa función no devuelve nada 
 
 Podemos asignar una función a una variables de la siguiente manera:
 
-```
-
-function add3 (n1:number, n2:number): number{
-
-  return n1+n2;
+```typescript
+function add3(n1: number, n2: number): number {
+  return n1 + n2;
 }
 
 let combineValues = add3;
@@ -486,21 +463,19 @@ let combineValues = add3;
 
 Si lo dejo así esa variable le puedo asignar cualquier otro valor y eso ocasionar un error en el código. Para evitar eso tenemos el tipo Function en TS que nos permite fijar que una variable contendrá una función y además especificar cómo será esa función
 
-```
-function add3 (n1:number, n2:number): number{
-
-  return n1+n2;
+```typescript
+function add3(n1: number, n2: number): number {
+  return n1 + n2;
 }
-let combineValues : Function;
+let combineValues: Function;
 ```
 
 Si lo dejo así puedo asignar a la variable cualquier función, vamos a acotar más el asunto para ello con notación de arrow function fijamos los tipos de los arámetros y del retorno
 
-```
-let combineValues : (a:number,b:number)=> number;
+```typescript
+let combineValues: (a: number, b: number) => number;
 
 combineValues = add;
-
 ```
 
 si la función devuelve otro tipo de dato TS se quejará
@@ -511,53 +486,49 @@ si la función devuelve otro tipo de dato TS se quejará
 
 Podemos definir como será el callback que recibe la función
 
-```
-function addAndHandle (a:number,b:number, callBackFunction : (num:number)=>void){
-
-  const result = a+b;
+```typescript
+function addAndHandle(
+  a: number,
+  b: number,
+  callBackFunction: (num: number) => void
+) {
+  const result = a + b;
 
   callBackFunction(result);
 }
 
-
-addAndHandle(10,20, (result)=>{ //creamos una función anónima que es el callback
+addAndHandle(10, 20, (result) => {
+  //creamos una función anónima que es el callback
   console.log(result);
-
-})
-
+});
 ```
 
 ## Unkown Type
 
 Es parecido a [any](###any) pero más restrictivo. Tengo que hacer una comprobación extra.
 
-```
-let userInput : unknown;
-let userName : string;
+```typescript
+let userInput: unknown;
+let userName: string;
 
-userInput= 5;
-userInput= 'ddd';
+userInput = 5;
+userInput = "ddd";
 
-if(typeof userInput === 'string'){
-
-  userName= userInput;
+if (typeof userInput === "string") {
+  userName = userInput;
 }
-
 ```
 
 ## Never Type
 
 Es un tipo que puede devolver una función, normalmente se usa en funciones que lanzan un error
 
-```
-
-function generateError(message:string,code:number): never{
-
-  throw{message:message, errorCode:code}
-
+```typescript
+function generateError(message: string, code: number): never {
+  throw { message: message, errorCode: code };
 }
 
-generateError('a error has ocurred', 500);
+generateError("a error has ocurred", 500);
 ```
 
 ![error](images/img-15.png)
