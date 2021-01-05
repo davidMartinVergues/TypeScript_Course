@@ -624,3 +624,6 @@ Normalmente los proyectos tienen una carpeta source donde están los archivos TS
 Por defecto está seteado en false, esto indica que si TS tiene errores igualmente generará el archivo JS, si lo ponemos en True mientras haya errores no compilará ningún archivo a JS.
 
 ![error](images/img-22.png)
+
+
+Pequeño cambio
