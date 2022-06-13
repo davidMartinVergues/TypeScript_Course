@@ -124,10 +124,11 @@ btn.addEventListener("click", () => {
   1.  Instalamos nvm
       `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash`
 
-            - comprobamos verison ``` nvm --version ```
+      - comprobamos verison `nvm --version`
 
   2.  Miramos en la web de node la última versión
-      `nvm install 14.9.0` - comprobamos verison `node -v`
+      `nvm install 14.9.0` 
+      - comprobamos verison `node -v`
 
 Una vez tenemos instalado el compilador de TS para compilar a JS un archivo TS
 
@@ -139,7 +140,7 @@ Esto nos generará un archivo JS que será el que leerá el interprete de JS(nav
 
 ![error](images/img-2.png)
 
----
+
 
 ---
 
@@ -149,7 +150,6 @@ Esto nos generará un archivo JS que será el que leerá el interprete de JS(nav
 
 ---
 
----
 
 # Trabajando con Tipos
 
@@ -168,7 +168,7 @@ Una cosa a tener en cuenta es que en JS los tipos son dinámicos, es decir puede
 
 ### En una función
 
-Para poder decirle a TS que en la función solo acepte un tipo concreto de datos debemos usar la notación de :
+Para poder decirle a TS que en la función solo acepte un tipo concreto de datos debemos usar la notación de `:`
 
 ```typescript
 function add(n1: number, n2: number) {
@@ -187,7 +187,7 @@ También podemos usar la notación de ':' cuando definimos una variable.
 ```typescript
 let n1: number;
 n1= 5;
-}
+
 ```
 
 Así 'avisamos' a TS que la variable contendrá un number y si queremos asignarle otro tipo nos dará error.
@@ -196,7 +196,7 @@ Así 'avisamos' a TS que la variable contendrá un number y si queremos asignarl
 
 ```typescript
 let n1: number= 5;
-}
+
 ```
 
 esto sería una mala praxis porque el core types de TS tiene una función que se llama **_inferencia de datos_** esto significa que cuando inicializamos una variable TS 'recuerda' que tipo de dato es el inicial y si intentamos darle otro tipo de dato también se quejará.
@@ -252,7 +252,7 @@ let favoriteActivities: string[];
 favoriteActivities = ["sports"];
 ```
 
-3. o bien para que pueda contener una ezcla de dos tipos de datos
+3. o bien para que pueda contener una mezcla de dos tipos de datos
 
 ```typescript
 let favoriteActivities: (string | number)[];
@@ -282,7 +282,7 @@ tupla[1] = 5; // no me permite poner en la segunda posición  un number
 
 tupla = ["david", 1]; // no me permite poner un number seguido de string
 
-tupla = [1]; // no cumple ni tamaño no tipo de datos
+tupla = [1]; // no cumple ni tamaño ni tipo de datos
 
 tupla = [10, "david", 5]; // no cumple  tamaño*/
 
@@ -470,7 +470,7 @@ function add3(n1: number, n2: number): number {
 let combineValues: Function;
 ```
 
-Si lo dejo así puedo asignar a la variable cualquier función, vamos a acotar más el asunto para ello con notación de arrow function fijamos los tipos de los arámetros y del retorno
+Si lo dejo así puedo asignar a la variable cualquier función, vamos a acotar más el asunto para ello con notación de arrow function fijamos los tipos de los parámetros y del retorno
 
 ```typescript
 let combineValues: (a: number, b: number) => number;
