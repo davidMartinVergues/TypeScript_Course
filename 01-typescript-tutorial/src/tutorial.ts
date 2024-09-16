@@ -581,3 +581,33 @@ const anotherStudent : Student = {
     name:"David4",
     age: 41
 }
+
+
+// generics
+
+// nos permiten escribir funciones que acepten argumentos de cualquier tipo
+
+function genericFunction<T>(arg:T):T{
+    return arg
+}
+
+console.log(genericFunction(8767))
+
+
+// VAMOS A ESCRIBIR UNA FUNCION ASINCRONA EN JS Y RECORDEMOS QUE CUALQUIER FUNCION ASINCORNA EN JS DEVUELVE UNA PROMISE,
+// y en la promesa puede devolver cualquier tipo xq acepta genericos
+
+async function someFunc():Promise<string>{
+    return 'hello'
+}
+
+
+function createArray<T>(length:number,value:T):Array<T>{
+    let result : Array<T> = [];
+
+    result = Array(length).fill(value);
+
+    return result;
+
+}
+
