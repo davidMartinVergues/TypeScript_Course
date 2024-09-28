@@ -571,7 +571,10 @@ let unKnownValue : unknown;
 
 
 // MODULOS EN TS SIGUEN LOS MODULOS DE ES6
-
+/**
+ * 
+ * 
+ */
 import newStudent,{personn, type Student} from './export_to_tutorial'
 
 console.log(personn);
@@ -585,7 +588,7 @@ const anotherStudent : Student = {
 
 // generics
 
-// nos permiten escribir funciones que acepten argumentos de cualquier tipo
+// nos permiten escribir funciones/ interfaces que acepten argumentos de cualquier tipo
 
 function genericFunction<T>(arg:T):T{
     return arg
@@ -610,4 +613,90 @@ function createArray<T>(length:number,value:T):Array<T>{
     return result;
 
 }
+
+// funciones con multiples tipos
+
+function pair<T,U>(param1:T,param2:U):[T,U]{
+    return [param1,param2]
+}
+
+
+let result = pair('hello',123)
+
+console.log(result);
+
+// podemos limitar el tipo de opciones q adopta un valor generico
+
+function processValue <T extends string  | number >(value:T):T{
+    return value
+}
+
+// que pasa si tenemos nuestro propios tipos
+
+type Car = {
+    name:string;
+    age:number;
+}
+
+type Student2 = {
+    name:string;
+    age:number;
+}
+
+type Fruit = {
+    name:string;
+
+}
+
+const myCar:Car = {
+    name:'car',
+    age:2
+}
+
+const myStudent:Student2 = {
+    name:'david',
+    age:20
+}
+
+const myFruit:Fruit = {
+    name:'naranja'
+}
+
+function printName<T extends Car | Student2 >(car:T):void{
+    console.log(car.name);
+     
+}
+
+printName(myCar)
+printName(myStudent)
+/*
+printName(myFruit) // se queja xq aunq FRUIT TENGA LA PROPIEDAD NOMBRE TB HEMOS FIJADO Q EL GENERICO SOLO PUEDE SER CAR O STUDENT
+
+*/
+
+
+// vaklor por defecto de un generic
+
+interface StoreData<T = any>{
+    data : T[];
+}
+
+// aqui sabemos el tipo de datos q almacenaremos en storeData
+const storeNumbers:StoreData<number> = {
+    data:[1,2,3]
+}
+
+// pero si no sabemos podemos settear un valor x defecto lo habitual es poner any <T = any>
+
+const storeStuff:StoreData= {
+    data:[1,'hello', car]
+}
+
+// FETCHING DATA USIN TYPESCRIPT
+
+/*
+LO HABITUAL ES USAR UNA LIBRERIA COMO AXIOS PERO 
+
+
+*/
 
