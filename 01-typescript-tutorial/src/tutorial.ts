@@ -700,3 +700,261 @@ LO HABITUAL ES USAR UNA LIBRERIA COMO AXIOS PERO
 
 */
 
+const url = "https://api.artic.edu/api/v1/artworks/search?q=cats";
+
+type Pagination = {
+    "total": number;
+    "limit": number;
+    "offset": number;
+    "total_pages": number;
+    "current_page": number;
+
+}
+
+type thumbnail = {
+    "alt_text": string;
+    "width": number;
+    "lqip": string;
+    "height": number;
+
+}
+
+type Arts ={
+    "_score": number;
+    "thumbnail": thumbnail;
+    "api_model": string;
+    "is_boosted": boolean;
+    "api_link": string;
+    "id": number;
+    "title": string;
+    "timestamp": string;
+  }
+
+  type Info ={
+    "license_text": string;
+    "license_links": string[];
+    "version": string;
+  }
+
+  type Config ={
+    "iiif_url": string;
+    "website_url": string;
+  }
+
+type APIResponse = {
+
+    preference: boolean;
+    pagination: Pagination;
+    data: Arts[];
+    info: Info;
+    config: Config;
+}
+
+
+
+async function fetchData(url:string): Promise <APIResponse | string>{
+
+    try{
+        const response = await fetch(url)
+
+        if (!response.ok){
+            throw new Error(`HTTP error status ${response.status}`)
+        }
+
+        const data : APIResponse= await response.json()
+        
+        return data
+
+    }catch(error){
+
+        const errorMsg = error instanceof Error ? error.message : `there was an error`
+
+        return errorMsg 
+        
+    }
+
+}
+
+// si lo hacemos asi TS le asigna el type any a lo q nos devuelve la promesa.
+const result2 = await fetchData(url)
+
+if (typeof result2 == 'object' && result2  != null && 'data' in result2 ){
+
+    console.log(result2);
+    
+   
+    
+}
+
+// ahora bien esto es muy cool xq le estamos diciento a TS nuestro tipo pero q pasa si en la api response viene una propiedad no definida en el tipo, es decir q en RunTime el tipo no coincide cn lo q nos viene de respuesta de la API, simplemnete 
+// nos pone undefined pero para evitar esto usaremos un validados en tiempo de ejecucion instalando una libreria llamada  'Zod' 
+
+// primero instalamos la libreria 
+
+import {z} from 'zod';
+
+// Esquema de validación para Pagination
+const PaginationSchema = z.object({
+    total: z.number(),
+    limit: z.number(),
+    offset: z.number(),
+    total_pages: z.number(),
+    current_page: z.number(),
+  });
+  
+  // Esquema de validación para Thumbnail
+  const ThumbnailSchema = z.object({
+    alt_text: z.string(),
+    width: z.number(),
+    lqip: z.string(),
+    height: z.number(),
+  });
+  
+  // Esquema de validación para Arts
+  const ArtsSchema = z.object({
+    _score: z.number(),
+    thumbnail: ThumbnailSchema,
+    api_model: z.string(),
+    is_boosted: z.boolean(),
+    api_link: z.string(),
+    id: z.number(),
+    title: z.string(),
+    timestamp: z.string(),
+  });
+  
+  // Esquema de validación para Info
+  const InfoSchema = z.object({
+    license_text: z.string(),
+    license_links: z.array(z.string()),
+    version: z.string(),
+  });
+  
+  // Esquema de validación para Config
+  const ConfigSchema = z.object({
+    iiif_url: z.string(),
+    website_url: z.string(),
+  });
+  
+  // Esquema de validación para APIResponse
+  const APIResponseSchema = z.object({
+    preference: z.boolean(),
+    pagination: PaginationSchema,
+    data: z.array(ArtsSchema),
+    info: InfoSchema,
+    config: ConfigSchema,
+  });
+
+  type APIResponse_wt_zod = z.infer<typeof APIResponseSchema>
+
+  async function fetchData_wt_zod(url:string): Promise <APIResponse | string>{
+
+    try{
+        const response = await fetch(url)
+
+        if (!response.ok){
+            throw new Error(`HTTP error status ${response.status}`)
+        }
+
+        const rawData : APIResponse= await response.json()
+
+        
+        return rawData
+
+    }catch(error){
+
+        const errorMsg = error instanceof Error ? error.message : `there was an error`
+
+        return errorMsg 
+        
+    }
+
+}
+  
+
+  // Validar los datos
+  const parsedData : APIResponse_wt_zod | string = await fetchData(url)  // Si es válido, devuelve los datos parseados, si no, lanza un error
+
+  console.log('with zod');
+  
+  console.log(parsedData);
+
+
+//****************************** */
+// Classes
+//****************************** */
+
+
+class MyBook{
+
+    readonly title : string;
+    private author: string;
+    public something: boolean = true;
+
+    constructor(title:string,author:string){
+
+        this.title = title;
+        this.author = author;
+    }
+
+    checkout(){
+        this.something = this.toggle()
+    }
+
+    private toggle(){
+        return !this.something
+    }
+
+
+}
+
+// PODEMOS DEFINIR EL CONSTRUCTOR DE ESTE MODO
+
+class MyBook2{
+
+    constructor(readonly title:string,public author:string, private something:boolean= true){}
+
+    checkout(){
+        this.something = this.toggle()
+    }
+
+    private toggle(){
+        return !this.something
+    }
+
+
+    // GETTERS
+
+    get info(){
+        return `${this.title} by ${this.author}`
+    }
+    //SETTER
+
+    set checkOut(checkout : boolean){
+        this.something = checkout
+    }
+
+}
+
+const mybook2 = new MyBook2('title2','author2')
+
+// interface
+
+interface IPerson{
+    name:string;
+    age:number;
+    greet():void;
+}
+
+class Person20 implements IPerson{
+    constructor(public name:string, public age:number){}
+
+    public greet(): void {
+        console.log(`hi! ${this.name}`);
+        
+    }
+}
+
+
+// TASKS !
+
+// VER EL ARCHIVO TASKS.TS
